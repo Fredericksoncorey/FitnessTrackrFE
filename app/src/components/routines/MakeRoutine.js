@@ -1,54 +1,56 @@
-//import { useState, useEffect } from 'react';
-//import { Redirect } from 'react-router';
-//import {createRoutine} from
+import { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
+import {createRoutines} from '../../api'
 
 const MakeRoutine = ({ setDisplayMessage, setIsShown, loggedIn }) => {
-// if(!loggedIn){return <Redirect to = "/" />}
-    /* const [newRoutine, setNewRoutine] = useState();
-    const [finished, setFinished] = useState(false); */
+ const [newRoutine, setNewRoutine] = useState();
+    const [finished, setFinished] = useState(false);
+    
+     
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Say Cheese!!!");
         
         
-        /* const [name, goal] = event.target;
+        const [name, goal] = event.target;
         
         if(name.value && goal.value){
            const newRoutine = {
-               routine: {
+               
                    name: name.value,
-                   goal: goal.value
-               }
+                   goal: goal.value,
+                   isPublic: true
+              
            } 
            setNewRoutine(newRoutine)
         }else{
-            //display message
-            //set message to show(true)
-        } */
+            alert("Make sure all fields are filled in")
+        } 
     }
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    /* useEffect(async () => {
+    useEffect(async () => {
         if(newRoutine) {
             try{
-                const response = await createRoutine(newRoutine);
+                const response = await createRoutines(newRoutine);
+                console.log(response)
                 setFinished(true)
     
             }catch (error) {
                 console.error(error)
             }finally {<Redirect to = "/"/>}
         }
-        }, [newRoutine]) */
+        }, [newRoutine]) 
 
     
-    /* if(finished){
+     if(finished){
         return <Redirect to = "/"/>
 
-    }else{ */
-        return ( <div className="makePost">
+    }else{ 
+        return ( <div className="makeRoutine">
                 
-        <h2>Create A Post</h2>
+        <h2>Create A Routine</h2>
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Name</label>
@@ -63,6 +65,6 @@ const MakeRoutine = ({ setDisplayMessage, setIsShown, loggedIn }) => {
     </div>
         )
     }
-//}
+}
 
 export default MakeRoutine

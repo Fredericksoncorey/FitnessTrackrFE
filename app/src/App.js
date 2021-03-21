@@ -17,16 +17,14 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState("");
   const [loggedIn, setLoggedIn] = useState(getToken());
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     if (loggedIn) {
         try {
             const data = await fetchUserData()
             console.log(data.username)
-            if(!currentUser){
-              console.log("NOTHING HERE!!!")
-            }else{
-              setCurrentUser(data.username);
-            }
+            setCurrentUser(data.username);
+            
 
         } catch (error) {
             console.error(error);
