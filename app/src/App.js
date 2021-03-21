@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Link, Switch, Route} from "react-router-dom"
 import {default as MakeRoutine} from "./components/routines/MakeRoutine"
 import {getToken, clearToken} from "./auth"
-import{fetchUserData} from "./api"
+import{fetchUserData, fetchAllActivites} from "./api"
 import {
   Login,
   LogOut,
@@ -16,15 +16,16 @@ const App = () => {
   const [authorized, setAuthorized] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [loggedIn, setLoggedIn] = useState(getToken());
+  const [activities, setActivities] = useState(null);
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     if (loggedIn) {
         try {
-            const data = await fetchUserData()
-            console.log(data.username)
+            const data = await fetchUserData();
             setCurrentUser(data.username);
-            
+            const grabbedActivities = await fetchAllActivites();
+            setActivities(grabbedActivities);
 
         } catch (error) {
             console.error(error);
@@ -84,6 +85,7 @@ const App = () => {
              <MyRoutines 
              loggedIn={loggedIn}
              currentUser={currentUser}
+             activities={activities}
               />
           </Route>
           <Route path='/activities'>

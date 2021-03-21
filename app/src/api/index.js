@@ -29,7 +29,6 @@ export const fetchUserRoutines = async (username) => {
                 
             }
         });
-        console.log(response)
         const data = await response.json();
 
         return data
@@ -75,4 +74,21 @@ export const fetchAllRoutines = async () => {
     } catch (error) {
         console.error(error);
     }    
+}
+
+export const fetchAllActivites = async () => {
+
+    try {
+        const response = await fetch(`${baseURL}activities`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const data = await response.json();
+        return data
+
+    } catch (error) {
+        console.error(error);
+    }    
+
 }
