@@ -1,14 +1,36 @@
 import {Redirect, Link} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {fetchUserRoutines, fetchAllActivites} from "../../api"
+import {fetchUserRoutines, applyActivityToRoutine} from "../../api"
 
 const MyRoutines = ({loggedIn, currentUser, activities}) => {
     const [userRoutines, setUserRoutines] = useState()
-    const [activityId, setActivityId] = useState()
-    
-    const handleSubmit = (event) => {
+    const [activityId, setActivityId] = useState();
+    const[durationCount, setDurationCount] = useState();
+    const [routineId, setRoutineId] = useState();
+    const[hack, setHack] = useState(1);
+    /* const[showUpdate, setShowUpdate] =  */
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(activityId)
+        const {duration,count} = durationCount;
+        if(duration||count != 1){
+           return alert("Make sure to fill out all fields with numbers")
+        }
+        
+        try{
+        const response = await applyActivityToRoutine(routineId, activityId, count, duration)
+        console.log(response)
+        if(!response.id){
+           return alert("Something went wrong")
+            
+        }
+        setRoutineId(null)
+        setDurationCount(null)
+        setActivityId(null)
+        setHack(hack+1)
+        }catch(error) {console.error(error)}
+        
+        
+
 
 
     }
@@ -21,13 +43,14 @@ const MyRoutines = ({loggedIn, currentUser, activities}) => {
         try{
             const routines  = await fetchUserRoutines(currentUser); //<--change to currentUser
             setUserRoutines(routines)
+            console.log(routines)
             console.log(activities)
             
         }catch (error) {console.error(error)
         }
     }
 
-    useEffect(getUserRoutines, [currentUser, activities])
+    useEffect(getUserRoutines, [currentUser, activities, hack])
     
 
     if(!loggedIn){
@@ -63,9 +86,9 @@ const MyRoutines = ({loggedIn, currentUser, activities}) => {
                             id="select-activity"
                             value={activityId} //set to id 
                             onChange={(event) => {
-
-                                return setActivityId(event.target.value)
-                                
+                                setRoutineId(routine.id)
+                                setActivityId(event.target.value)
+                                return 
                                 } 
                             }>
                             <option value = "null" >Select an activity to add</option>   
@@ -74,12 +97,14 @@ const MyRoutines = ({loggedIn, currentUser, activities}) => {
                                 )}
                                 )
                             }    
-                            
-
                             </select>
                             <div>
+                                <label>Count</label>
+                                <input type='number' min="1" placeholder='Count' onChange={(e) => setDurationCount({ ...durationCount, count: e.target.value })} />
+                            </div>
+                            <div>
                                 <label>Duration</label>
-                                <input type='text' placeholder='Duration' />
+                                <input type='number' min="1" placeholder='Duration' onChange={(e) => setDurationCount({ ...durationCount, duration: e.target.value })} />
                             </div>
                             <button className = "submitButton" type='submit'>Submit</button>
                     </form>

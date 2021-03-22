@@ -92,3 +92,65 @@ export const fetchAllActivites = async () => {
     }    
 
 }
+
+export const applyActivityToRoutine = async (routineId, activityIdV, countV, durationV) => {
+console.log(activityIdV, countV, durationV)
+    try {
+        const response = await fetch(`${baseURL}routines/${routineId}/activities`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                activityId: activityIdV, 
+                count: countV,
+                duration: durationV})
+        });
+        const data = await response.json();
+        return data
+
+    } catch (error) {
+        console.error(error);
+    }    
+
+}
+
+export const updateRoutine = async (routineId, obj) =>{
+    try {
+        const response = await fetch(`${baseURL}routines/${routineId}/activities`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({obj})
+        });
+        const data = await response.json();
+        return data
+
+    } catch (error) {
+        console.error(error);
+    }    
+
+
+}
+
+export const createActivity = async (activity) => {
+    try {
+        const response = await fetch(`${baseURL}activities`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(activity) 
+            
+        });
+        const data = await response.json();
+
+        return data
+
+    } catch (error) {
+        console.error(error);
+    }     
+}

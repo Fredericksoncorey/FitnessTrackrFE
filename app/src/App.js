@@ -39,6 +39,7 @@ const App = () => {
       <nav className="navBar">
         <h1>FitnessTrackr</h1>
         <div>
+
           <Link className="Link" to="/">
             Home
           </Link>
@@ -80,6 +81,22 @@ const App = () => {
               Log Out
             </Link>
           ) : null}
+=======
+          <Link className="Link" to= '/'>Home</Link>
+          <Link className="Link" to= '/routines'>Routines</Link>
+          <Link className="Link" to= '/myRoutines'>My Routines</Link>
+          <Link className="Link" to= '/activities'>Activites</Link>
+          {/* !authorized  */ !loggedIn ? (<Link className="Link" to= '/Login'>Login</Link>) : null}
+          {/* !authorized  */ !loggedIn ? (<Link className="Link" to= '/Register'>Sign Up</Link>) : null}
+          {loggedIn ? <Link className="Link" onClick={() => {
+                        clearToken();
+                        //setUsername(null);
+                        setLoggedIn(null);
+                        setAuthorized(null)
+                        setCurrentUser(null)
+                    }}
+                        to='/'>Log Out</Link> : null}
+
         </div>
       </nav>
       <main>
@@ -118,12 +135,22 @@ const App = () => {
               activities={activities}
             />
           </Route>
+
           <Route path="/activities">
             <Activities
               loggedIn={loggedIn}
               currentUser={currentUser}
               activities={activities}
             />
+
+          <Route path='/activities'>
+          <Activities
+             loggedIn={loggedIn}
+             currentUser={currentUser}
+             activities={activities}
+             setActivities={setActivities}
+              />
+
           </Route>
           <Route path="/createRoutine">
             <MakeRoutine />
