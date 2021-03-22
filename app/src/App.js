@@ -9,7 +9,8 @@ import {
   LogOut,
   Register,
   MyRoutines,
-  Routines
+  Routines,
+  Activities
 } from "./components"
 
 const App = () => {
@@ -38,63 +39,96 @@ const App = () => {
       <nav className="navBar">
         <h1>FitnessTrackr</h1>
         <div>
-          <Link className="Link" to= '/'>Home</Link>
-          <Link className="Link" to= '/routines'>Routines</Link>
-          <Link className="Link" to= '/myRoutines'>My Routines</Link>
-          <Link className="Link" to= '/activites'>Activites</Link>
-          {/* !authorized  */ !loggedIn ? (<Link className="Link" to= '/Login'>Login</Link>) : null}
-          {/* !authorized  */ !loggedIn ? (<Link className="Link" to= '/Register'>Sign Up</Link>) : null}
-          {loggedIn ? <Link className="Link" onClick={() => {
-                        clearToken();
-                        //setUsername(null);
-                        setLoggedIn(null);
-                        setAuthorized(null)
-                        setCurrentUser(null)
-                    }}
-                        to='/'>Log Out</Link> : null}
+          <Link className="Link" to="/">
+            Home
+          </Link>
+          <Link className="Link" to="/routines">
+            Routines
+          </Link>
+          <Link className="Link" to="/myRoutines">
+            My Routines
+          </Link>
+          <Link className="Link" to="/activities">
+            Activites
+          </Link>
+          {
+            /* !authorized  */ !loggedIn ? (
+              <Link className="Link" to="/Login">
+                Login
+              </Link>
+            ) : null
+          }
+          {
+            /* !authorized  */ !loggedIn ? (
+              <Link className="Link" to="/Register">
+                Sign Up
+              </Link>
+            ) : null
+          }
+          {loggedIn ? (
+            <Link
+              className="Link"
+              onClick={() => {
+                clearToken();
+                //setUsername(null);
+                setLoggedIn(null);
+                setAuthorized(null);
+                setCurrentUser(null);
+              }}
+              to="/"
+            >
+              Log Out
+            </Link>
+          ) : null}
         </div>
       </nav>
       <main>
         <Switch>
-          <Route exact path= '/'>
+          <Route exact path="/">
             {/* HomePage component  */}
           </Route>
-          <Route path='/Login'>
-         {/*  {!authorized ? ( */}
-              <Login
-                loggedIn={loggedIn}
-                setLoggedIn={setLoggedIn}
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-                setAuthorized={setAuthorized}
-                authorized={authorized}
-              />
-           {/*  ) : null} */}
+          <Route path="/Login">
+            {/*  {!authorized ? ( */}
+            <Login
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              setAuthorized={setAuthorized}
+              authorized={authorized}
+            />
+            {/*  ) : null} */}
           </Route>
-          <Route path='/Register'>
-            {/* {!loggedIn ? */} <Register
-             setAuthorized={setAuthorized} 
-             loggedIn={loggedIn}
-             setLoggedIn={setLoggedIn}
-             /> {/* : null} */}
+          <Route path="/Register">
+            {/* {!loggedIn ? */}{" "}
+            <Register
+              setAuthorized={setAuthorized}
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+            />{" "}
+            {/* : null} */}
           </Route>
-          <Route path='/routines'>
+          <Route path="/routines">
             <Routines />
           </Route>
-          <Route path='/myRoutines'>
-             <MyRoutines 
-             loggedIn={loggedIn}
-             currentUser={currentUser}
-             activities={activities}
-              />
+          <Route path="/myRoutines">
+            <MyRoutines
+              loggedIn={loggedIn}
+              currentUser={currentUser}
+              activities={activities}
+            />
           </Route>
-          <Route path='/activities'>
-            {/* Activities component */}
+          <Route path="/activities">
+            <Activities
+              loggedIn={loggedIn}
+              currentUser={currentUser}
+              activities={activities}
+            />
           </Route>
-          <Route path='/createRoutine'>
+          <Route path="/createRoutine">
             <MakeRoutine />
-          </Route> 
-        </Switch>  
+          </Route>
+        </Switch>
       </main>
     </Router>
   );
