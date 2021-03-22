@@ -81,7 +81,7 @@ const App = () => {
               Log Out
             </Link>
           ) : null}
-=======
+         
           <Link className="Link" to= '/'>Home</Link>
           <Link className="Link" to= '/routines'>Routines</Link>
           <Link className="Link" to= '/myRoutines'>My Routines</Link>
@@ -149,7 +149,7 @@ const App = () => {
              currentUser={currentUser}
              activities={activities}
              setActivities={setActivities}
-              />
+          />
 
           </Route>
           <Route path="/createRoutine">
