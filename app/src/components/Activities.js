@@ -1,8 +1,9 @@
-import {/* useEffect,  */useState} from 'react'
+import { useEffect, useState} from 'react'
 import {createActivity, fetchAllActivites, /* fetchRoutinesByActivity */} from '../api'
 
 const Activities = ({activities, loggedIn, setActivities}) =>{
     const[newActivity, setNewActivity, ] = useState()
+    const [activityData, setActivityData] = useState()
     /* const[activityRoutines, setActivityRoutines] = useState(false);
     const[activityId, setActivityId]= useState() */
     const handleSubmit = async (event) =>{
@@ -24,6 +25,18 @@ const Activities = ({activities, loggedIn, setActivities}) =>{
 
     }
 
+    const fetchActivities = async () => {
+        if(!loggedIn){
+            try{
+                const grabbedActivities = await fetchAllActivites();
+                setActivities(grabbedActivities);        
+            }catch(error){
+                console.error(error)
+            }
+        }
+    }
+
+    useEffect(fetchActivities, [])
     /* const activityHandle = async (event) => {
         event.preventDefault()
         console.log(event.target.id)
